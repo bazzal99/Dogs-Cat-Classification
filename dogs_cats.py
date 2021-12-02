@@ -280,76 +280,13 @@ sess.close()
 # In[15]:
 
 
-model_file=tf.train.latest_checkpoint(model_path)
+#model_file=tf.train.latest_checkpoint(model_path)
 
 
 # In[16]:
 
 
-print(model_file)
-
-
-# In[17]:
-
-
-path1="flower_photos/daisy/5547758_eea9edfd54_n.jpg"
-path2="flower_photos/dandelion/7355522_b66e5d3078_m.jpg"
-path3="flower_photos/tulips/132538272_63658146d9_n.jpg"
-path4="dandelion/1.jpg"
-path5="dandelion/2.jpg"
-path6="dandelion/3.jpg"
-flower_dict={0:'cats',1:'dogs'}
-w=100
-h=100
-c=3
-def read_one_image(path):
-    img=io.imread(path)
-    img=transform.resize(img,(w,h))
-    return np.asarray(img)
-
-
-# In[18]:
-
-
-with tf.Session() as sess:
-    data=[]
-    data1=read_one_image(path1)
-    data2=read_one_image(path2)
-    data3=read_one_image(path3)
-    data4=read_one_image(path4)
-    data5=read_one_image(path5)
-    data6=read_one_image(path6)
-    data.append(data1)
-    data.append(data2)
-    data.append(data3)
-    data.append(data4)
-    data.append(data5)
-    data.append(data6)
-    saver=tf.train.import_meta_graph('animal/model/CNN_model-2.meta')
-    saver.restore(sess,tf.train.latest_checkpoint('model'))
-    x=tf.get_default_graph().get_tensor_by_name("x:0")
-    print(x)
-    feed_dict={x:data}
-    logits=tf.get_default_graph().get_tensor_by_name("logits_eval:0")
-    classification_result=sess.run(logits,feed_dict)
-    print(classification_result)
-    print(tf.argmax(classification_result,1).eval())
-    output=[]
-    output=tf.argmax(classification_result,1).eval()
-    for i in range(len(output)):
-        print("animal",i+1,"predection:"+flower_dict[output[i]])
-
-
-# In[ ]:
-
-
-output=[]
-output=tf.argmax(classification_result,1).eval()
-for i in range(len(output)):
-    print("flower",i+1,"predection:"+flower_dict[output[i]])
-
-
-# In[ ]:
+#print(model_file)
 
 
 
